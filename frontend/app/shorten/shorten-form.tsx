@@ -1,21 +1,21 @@
 "use client"
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Copy, CheckCircle2, AlertCircle } from "lucide-react"
-import { shortenUrl } from "./action"
-import { shortenUrlSchema, type ShortenUrlInput } from "./schema"
+import {useState} from "react"
+import {useForm} from "react-hook-form"
+import {zodResolver} from "@hookform/resolvers/zod"
+import {Button} from "@/components/ui/button"
+import {Input} from "@/components/ui/input"
+import {Card} from "@/components/ui/card"
+import {Alert, AlertDescription} from "@/components/ui/alert"
+import {Copy, CheckCircle2, AlertCircle} from "lucide-react"
+import {shortenUrl} from "./action"
+import {shortenUrlSchema, type ShortenUrlInput} from "./schema"
 
 interface ShortenFormProps {
     initialUrl?: string
 }
 
-export function ShortenForm({ initialUrl = "" }: ShortenFormProps) {
+export function ShortenForm({initialUrl = ""}: ShortenFormProps) {
     const [shortCode, setShortCode] = useState("")
     const [shortUrl, setShortUrl] = useState("")
     const [copied, setCopied] = useState(false)
@@ -25,7 +25,7 @@ export function ShortenForm({ initialUrl = "" }: ShortenFormProps) {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         reset,
     } = useForm<ShortenUrlInput>({
         resolver: zodResolver(shortenUrlSchema),
@@ -46,7 +46,7 @@ export function ShortenForm({ initialUrl = "" }: ShortenFormProps) {
         setIsSubmitting(false)
 
         if ("error" in result) {
-            setError(result.error)
+            setError(result.error ?? null)
         } else {
             setShortCode(result.shortCode)
             setShortUrl(result.shortUrl)
@@ -65,7 +65,7 @@ export function ShortenForm({ initialUrl = "" }: ShortenFormProps) {
         <div className="space-y-4">
             {error && (
                 <Alert variant="destructive" className="border-destructive/50 bg-destructive/10">
-                    <AlertCircle className="h-4 w-4" />
+                    <AlertCircle className="h-4 w-4"/>
                     <AlertDescription>{error}</AlertDescription>
                 </Alert>
             )}
@@ -98,13 +98,15 @@ export function ShortenForm({ initialUrl = "" }: ShortenFormProps) {
             {shortCode && (
                 <Card className="p-6 space-y-4 bg-primary/5 border-primary/30">
                     <div className="flex items-center gap-2 mb-2">
-                        <CheckCircle2 className="w-5 h-5 text-primary" />
+                        <CheckCircle2 className="w-5 h-5 text-primary"/>
                         <p className="text-sm font-semibold text-primary">Success!</p>
                     </div>
                     <div className="space-y-3">
-                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Your Short URL</p>
+                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Your Short
+                            URL</p>
                         <div className="flex items-center gap-2">
-                            <code className="flex-1 p-3 bg-background rounded-lg text-sm font-mono text-foreground break-all border border-border">
+                            <code
+                                className="flex-1 p-3 bg-background rounded-lg text-sm font-mono text-foreground break-all border border-border">
                                 {shortUrl || `${window.location.origin}/${shortCode}`}
                             </code>
                             <Button
@@ -115,12 +117,12 @@ export function ShortenForm({ initialUrl = "" }: ShortenFormProps) {
                                 className="flex-shrink-0 bg-transparent"
                                 title={copied ? "Copied!" : "Copy to clipboard"}
                             >
-                                <Copy className="w-4 h-4" />
+                                <Copy className="w-4 h-4"/>
                             </Button>
                         </div>
                         {copied && (
                             <p className="text-xs text-primary font-medium flex items-center gap-1">
-                                <CheckCircle2 className="w-3 h-3" />
+                                <CheckCircle2 className="w-3 h-3"/>
                                 Copied to clipboard!
                             </p>
                         )}
