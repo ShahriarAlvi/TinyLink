@@ -18,8 +18,8 @@ public class UrlService {
 
     private final UrlRepository urlRepository;
 
-    @Value("${app.base-url}")
-    private String BASE_URL;
+    @Value("${app.frontend-url}")
+    private String FRONTEND_URL;
 
     public UrlService(UrlRepository urlRepository) {
         this.urlRepository = urlRepository;
@@ -29,7 +29,7 @@ public class UrlService {
         Optional<UrlMapping> existing = urlRepository.findByOriginalUrl(request.getOriginalUrl());
         if (existing.isPresent()) {
             UrlMapping existingMapping = existing.get();
-            return new UrlResponse(existingMapping.getShortCode(), BASE_URL + existingMapping.getShortCode());
+            return new UrlResponse(existingMapping.getShortCode(), FRONTEND_URL + existingMapping.getShortCode());
         }
 
         String shortCode = generateUniqueShortCode();
@@ -42,7 +42,7 @@ public class UrlService {
 
         urlRepository.save(urlMapping);
 
-        return new UrlResponse(shortCode, BASE_URL + shortCode);
+        return new UrlResponse(shortCode, FRONTEND_URL + shortCode);
 
     }
 
