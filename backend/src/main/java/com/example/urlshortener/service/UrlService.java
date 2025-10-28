@@ -4,6 +4,7 @@ import com.example.urlshortener.dto.UrlRequest;
 import com.example.urlshortener.dto.UrlResponse;
 import com.example.urlshortener.model.UrlMapping;
 import com.example.urlshortener.repository.UrlRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,8 @@ public class UrlService {
 
     private final UrlRepository urlRepository;
 
-    private static final String BASE_URL = "http://localhost:8080/";
+    @Value("${app.base-url}")
+    private String BASE_URL;
 
     public UrlService(UrlRepository urlRepository) {
         this.urlRepository = urlRepository;
