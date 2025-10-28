@@ -1,3 +1,6 @@
 # IntelliJ IDEA
 .idea/
 *.iml
+
+#Environment variables
+.env.local
